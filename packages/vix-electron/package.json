@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-electron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "typings": "src/index.ts",
@@ -31,8 +31,8 @@
     "vite": "^2.6.7"
   },
   "dependencies": {
-    "@tekclaw/scaffold": "^1.0.0",
-    "@tekclaw/vix-utils": "^1.0.0",
+    "@tekclaw/scaffold": "^1.0.1",
+    "@tekclaw/vix-utils": "^1.0.1",
     "builtin-modules": "^3.2.0",
     "deepmerge": "^4.2.2",
     "electron-devtools-installer": "^3.2.0",
