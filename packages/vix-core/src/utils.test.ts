@@ -1,6 +1,7 @@
 import { vi } from 'vitest';
 import shell from 'shelljs';
 import { createLogger } from 'vite';
+import path from 'path';
 import { GlobalCLIOptions, LoggerOption } from './types';
 import {
   cleanOptions,
@@ -10,11 +11,17 @@ import {
 } from './utils';
 
 vi.mock('vite', () => {
-  return {
+  return ({
     createLogger: vi.fn(),
-  };
+  });
 });
-
+vi.mock('path', () => {
+  return ({
+    default: {
+      resolve: vi.fn((val)=> `./mockPath/${val}`),
+    }
+  });
+});
 let mockNpmVersion = '6.00';
 let mockNodeVersion = '14.00';
 const CLI_ALIAS = 'fakeCli';
@@ -22,15 +29,15 @@ let withError = false;
 const mockExec = (cmd: string) => {
   let output = withError
     ? {
-        stdout: '',
-        stderr: 'fake error',
-        code: 'somecode',
-      }
+      stdout: '',
+      stderr: 'fake error',
+      code: 'somecode',
+    }
     : {
-        stdout: '',
-        stderr: undefined,
-        code: undefined,
-      };
+      stdout: '',
+      stderr: undefined,
+      code: undefined,
+    };
   switch (cmd) {
     case 'npm -v':
       output = {
@@ -66,8 +73,6 @@ describe('cleanOptions()', () => {
       '--': [''],
       c: 'test',
       config: 'test',
-      r: 'test',
-      root: 'test',
       base: 'test',
       l: 'silent',
       logLevel: 'silent',
@@ -78,9 +83,29 @@ describe('cleanOptions()', () => {
       filter: 'test',
       m: 'test',
       mode: 'test',
+      force: false
     };
 
     expect(cleanOptions(options)).toStrictEqual({});
+  });
+
+  test('should resolve ourDir path', () => {
+    const options = {
+      outDir: 'dist'
+    };
+
+    expect(cleanOptions(options as any)).toStrictEqual({
+      outDir: path.resolve(options.outDir)
+    });
+  });
+
+  test('should delete undefined keys', () => {
+    const options = {
+      outDir: undefined,
+      root: undefined
+    };
+
+    expect(cleanOptions(options as any)).toStrictEqual({});
   });
 });
 

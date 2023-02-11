@@ -24,6 +24,7 @@ export default function reactPlugin({
   ...restReactOptions
 }: ReactPresetPluginOptions = {}): (Plugin | PluginOption[])[] {
   return [
+    // @ts-ignore
     react({
       jsxRuntime: injectReact ? 'automatic' : 'classic',
       ...restReactOptions,

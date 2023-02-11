@@ -1,12 +1,12 @@
 import shell from 'shelljs';
 import { createLogger, Logger } from 'vite';
-
+import path from 'path';
 import { GlobalCLIOptions, LoggerOption } from './types';
 /**
  * removing global flags before passing as command specific sub-configs
  */
 export function cleanOptions<Options extends GlobalCLIOptions>(
-  options: Options
+  options: Options,
 ): Omit<Options, keyof GlobalCLIOptions> {
   const ret = { ...options };
   delete ret['--'];
@@ -22,6 +22,12 @@ export function cleanOptions<Options extends GlobalCLIOptions>(
   delete ret.filter;
   delete ret.m;
   delete ret.mode;
+  delete ret.force;
+  
+  Object.keys(ret).forEach(key => {
+    ret[key] === undefined && delete ret[key]
+  });
+  ret['outDir'] && (ret['outDir'] = path.resolve(ret['outDir']));
   return ret;
 }
 
@@ -29,8 +35,8 @@ export const ifDependenceExist = (name: string) => {
   const pkgPath = `${process.cwd()}/package.json`;
   const pkg = require(pkgPath);
   return ['dependencies', 'devDependencies']
-    .filter(dep => Boolean(pkg[dep]))
-    .some(dep => Object.keys(pkg[dep]).includes(name));
+    .filter((dep) => Boolean(pkg[dep]))
+    .some((dep) => Object.keys(pkg[dep]).includes(name));
 };
 
 export const makeLogger = (options: LoggerOption): Logger =>
@@ -85,7 +91,6 @@ export function installSymlink(cliName: string) {
 
   // Remove existing binary.
   shell.rm('-f', `/usr/local/bin/${cliName}`);
-
   watcher(
     `📦  Linking ${cliName}-cli...`,
     `ln -s "$(pwd)/dist/bin/cli.js" /usr/local/bin/${cliName}`

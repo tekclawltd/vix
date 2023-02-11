@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-core",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "lightning fast builds and dev tool",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -21,6 +21,7 @@
     "watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
+    "setup": "node dist/install",
     "prepublishOnly": "npm run build"
   },
   "author": "Joey.Etamity",

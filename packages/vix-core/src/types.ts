@@ -19,7 +19,7 @@ export declare interface GlobalCLIOptions {
   filter?: string;
   m?: string;
   mode?: string;
-  force?: boolean;
+  force?: boolean
 }
 
 export interface LoggerOption extends ViteUserConfig {

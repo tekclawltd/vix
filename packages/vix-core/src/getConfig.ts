@@ -28,12 +28,24 @@ const loadUserConfig = async (
     options.root,
     options.logLevel
   );
-  const { settings = {}, plugins = [] } = config;
+  const { settings = {}, plugins = [], devServer, browserBuild = {} } = config;
   const { loggerPrefix } = settings;
   const logger = makeLogger({
     logLevel: 'info',
     loggerPrefix: loggerPrefix || `[${CLI_ALIAS}]`,
   });
+  const mergeDevServerOptions = {
+    ...devServer,
+    ...serverOptions,
+  }
+  const { build, outDir } = browserBuild;
+  const mergeBuildOptions = {
+    outDir,
+    ...build,
+    ...buildOptions,
+  }
+  config.devServer = mergeDevServerOptions;
+  config.browserBuild.build = mergeBuildOptions;
   const inlineConfig: InlineConfig = Object.assign(
     {
       root: options.root,
@@ -79,13 +91,13 @@ export default async (
   const inlineConfig: InlineConfig = isConfigExist
     ? await loadUserConfig(options, command)
     : (
-        await resolveConfig(
-          {
-            ...wrapOptions,
-            plugins: [devServerPlugin(wrapOptions, {}, command) as Plugin[]],
-          },
-          command
-        )
-      ).inlineConfig;
+      await resolveConfig(
+        {
+          ...wrapOptions,
+          plugins: [devServerPlugin(wrapOptions, {}, command) as Plugin[]],
+        },
+        command
+      )
+    ).inlineConfig;
   return inlineConfig;
 };

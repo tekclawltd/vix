@@ -24,7 +24,7 @@ export default function serverPlugin(cfg: FastUserConfig = {}): Plugin[] {
     ...serverOptions
   } = devServer || {};
   let command: string;
-  const { outDir, ...viteOptions } = browserBuild || {};
+  const { ...viteOptions } = browserBuild || {};
   const { loggerPrefix, forceLoadJsAsJsx = false } = presets;
   const logger = makeLogger({
     logLevel: 'info',
@@ -49,12 +49,6 @@ export default function serverPlugin(cfg: FastUserConfig = {}): Plugin[] {
               ),
             }) as any,
             shouldLoadjsAsJsxPlugin(forceLoadJsAsJsx, cfg),
-            outDir && {
-              build: {
-                emptyOutDir: true,
-                outDir,
-              },
-            },
             viteOptions,
             {
               server: serverOptions,
