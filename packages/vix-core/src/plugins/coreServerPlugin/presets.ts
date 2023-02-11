@@ -15,7 +15,7 @@ const shouldLoadjsAsJsxPlugin = (
               {
                 name: 'load-js-files-as-jsx',
                 setup(build) {
-                  build.onLoad({ filter: /src\/.*\.jsx?$/ }, async (args) => ({
+                  build.onLoad({ filter: /src\/.*\.jsx?$/ }, async args => ({
                     loader: 'jsx',
                     contents: await fs.promises.readFile(args.path, 'utf8'),
                   }));

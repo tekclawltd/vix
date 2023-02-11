@@ -8,7 +8,7 @@ import { PLUGIN_NAME, ServerPlugin, FastUserConfig } from './types';
 
 export const getPluginConfig = (server: ViteDevServer): FastUserConfig => {
   const plugin = server.config.plugins.find(
-    (p) => p.name === PLUGIN_NAME
+    p => p.name === PLUGIN_NAME
   ) as ServerPlugin;
   if (!plugin) {
     console.error(`Could not find plugin ${PLUGIN_NAME}`);

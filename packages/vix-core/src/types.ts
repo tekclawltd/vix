@@ -1,6 +1,6 @@
 import { LogLevel, UserConfig as ViteUserConfig } from 'vite';
 
-export const CLI_ALIAS = 'fast';
+export const CLI_ALIAS = 'vix';
 // global options
 export declare interface GlobalCLIOptions {
   '--'?: string[];
@@ -19,7 +19,7 @@ export declare interface GlobalCLIOptions {
   filter?: string;
   m?: string;
   mode?: string;
-  force?: boolean
+  force?: boolean;
 }
 
 export interface LoggerOption extends ViteUserConfig {

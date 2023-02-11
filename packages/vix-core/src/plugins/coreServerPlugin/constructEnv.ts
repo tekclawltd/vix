@@ -18,7 +18,7 @@ export default (config: FastUserConfig, envs?: Record<string, string>) => {
     Object.defineProperties(
       process.env,
       Object.fromEntries(
-        Object.keys(envs).map((next) => [
+        Object.keys(envs).map(next => [
           next,
           {
             value: envs[next],

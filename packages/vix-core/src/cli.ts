@@ -5,38 +5,47 @@ import { cac } from 'cac';
 import colors from 'picocolors';
 import type { BuildOptions } from 'vite';
 import type { ServerOptions } from 'vite';
-import { createLogger } from 'vite'
-import { resolveConfig, createServer, build, optimizeDeps, preview } from 'vite';
+import { createLogger } from 'vite';
+import {
+  resolveConfig,
+  createServer,
+  build,
+  optimizeDeps,
+  preview,
+} from 'vite';
 import shelljs from 'shelljs';
 import getConfig from './getConfig';
 import { GlobalCLIOptions } from './types';
-
 
 const VERSION = require('../package.json').version;
 let profileSession = global.__vite_profile_session;
 let profileCount = 0;
 
 export const stopProfiler = (
-  log: (message: string) => void,
+  log: (message: string) => void
 ): void | Promise<void> => {
   if (!profileSession) return;
   return new Promise((res, rej) => {
     profileSession!.post('Profiler.stop', (err: any, { profile }: any) => {
       // Write profile to disk, upload, etc.
       if (!err) {
-        const outPath = path.resolve(`./vite-profile-${profileCount++}.cpuprofile`);
+        const outPath = path.resolve(
+          `./vite-profile-${profileCount++}.cpuprofile`
+        );
         fs.writeFileSync(outPath, JSON.stringify(profile));
         log(
-          colors.yellow(`CPU profile written to ${colors.white(colors.dim(outPath))}`)
+          colors.yellow(
+            `CPU profile written to ${colors.white(colors.dim(outPath))}`
+          )
         );
         profileSession = undefined;
         res();
       } else {
         rej(err);
       }
-    })
-  })
-}
+    });
+  });
+};
 
 const filterDuplicateOptions = <T extends object>(options: T) => {
   for (const [key, value] of Object.entries(options)) {
@@ -44,7 +53,7 @@ const filterDuplicateOptions = <T extends object>(options: T) => {
       options[key as keyof T] = value[value.length - 1];
     }
   }
-}
+};
 
 export const createCli = (cliName: string, configPath?: string) => {
   const cli = cac(cliName);
@@ -55,10 +64,13 @@ export const createCli = (cliName: string, configPath?: string) => {
     })
     .option('--base <path>', `[string] public base path (default: /)`)
     .option('-l, --logLevel <level>', `[string] info | warn | error | silent`)
-    .option('--clearScreen', `[boolean] allow/disable clear screen when logging`)
+    .option(
+      '--clearScreen',
+      `[boolean] allow/disable clear screen when logging`
+    )
     .option('-d, --debug [feat]', `[string | boolean] show debug logs`)
     .option('-f, --filter <filter>', `[string] filter debug logs`)
-    .option('-m, --mode <mode>', `[string] set env mode`)
+    .option('-m, --mode <mode>', `[string] set env mode`);
 
   // dev
   cli
@@ -70,18 +82,19 @@ export const createCli = (cliName: string, configPath?: string) => {
     .option('--https', `[boolean] use TLS + HTTP/2`)
     .option('--open [path]', `[boolean | string] open browser on startup`)
     .option('--cors', `[boolean] enable CORS`)
-    .option('--strictPort', `[boolean] exit if specified port is already in use`)
+    .option(
+      '--strictPort',
+      `[boolean] exit if specified port is already in use`
+    )
     .option(
       '--force',
-      `[boolean] force the optimizer to ignore the cache and re-bundle`,
+      `[boolean] force the optimizer to ignore the cache and re-bundle`
     )
     .action(async (root: string, options: ServerOptions & GlobalCLIOptions) => {
       filterDuplicateOptions(options);
       // output structure is preserved even after bundling so require()
       // is ok here
-      const config = await getConfig(options as any,
-        'serve'
-      );
+      const config = await getConfig(options as any, 'serve');
       try {
         const server = await createServer(config);
 
@@ -96,13 +109,15 @@ export const createCli = (cliName: string, configPath?: string) => {
         const viteStartTime = global.__vite_start_time ?? false;
         const startupDurationString = viteStartTime
           ? colors.dim(
-            `ready in ${colors.reset(colors.bold(Math.ceil(performance.now() - viteStartTime)))} ms`,
-          )
+              `ready in ${colors.reset(
+                colors.bold(Math.ceil(performance.now() - viteStartTime))
+              )} ms`
+            )
           : '';
 
         info(
           `\n  ${colors.green(
-            `${colors.bold(cliName)} v${VERSION}`,
+            `${colors.bold(cliName)} v${VERSION}`
           )}  ${startupDurationString}\n`,
           { clear: !server.config.logger.hasWarned }
         );
@@ -138,76 +153,82 @@ export const createCli = (cliName: string, configPath?: string) => {
         // })
       } catch (e) {
         const logger = createLogger(options.logLevel);
-        logger.error(colors.red(`error when starting dev server:\n${e.stack}`), {
-          error: e,
-        });
+        logger.error(
+          colors.red(`error when starting dev server:\n${e.stack}`),
+          {
+            error: e,
+          }
+        );
         stopProfiler(logger.info);
         process.exit(1);
       }
-    })
+    });
 
   // build
   cli
     .command('build [root]', 'build for production')
-    .option('--target <target>', `[string] transpile target (default: 'modules')`)
+    .option(
+      '--target <target>',
+      `[string] transpile target (default: 'modules')`
+    )
     .option('--outDir <dir>', `[string] output directory (default: dist)`)
     .option(
       '--assetsDir <dir>',
-      `[string] directory under outDir to place assets in (default: assets)`,
+      `[string] directory under outDir to place assets in (default: assets)`
     )
     .option(
       '--assetsInlineLimit <number>',
-      `[number] static asset base64 inline threshold in bytes (default: 4096)`,
+      `[number] static asset base64 inline threshold in bytes (default: 4096)`
     )
     .option(
       '--ssr [entry]',
-      `[string] build specified entry for server-side rendering`,
+      `[string] build specified entry for server-side rendering`
     )
     .option(
       '--sourcemap',
-      `[boolean] output source maps for build (default: false)`,
+      `[boolean] output source maps for build (default: false)`
     )
     .option(
       '--minify [minifier]',
       `[boolean | "terser" | "esbuild"] enable/disable minification, ` +
-      `or specify minifier to use (default: esbuild)`,
+        `or specify minifier to use (default: esbuild)`
     )
     .option('--manifest [name]', `[boolean | string] emit build manifest json`)
     .option('--ssrManifest [name]', `[boolean | string] emit ssr manifest json`)
     .option(
       '--force',
-      `[boolean] force the optimizer to ignore the cache and re-bundle (experimental)`,
+      `[boolean] force the optimizer to ignore the cache and re-bundle (experimental)`
     )
     .option(
       '--emptyOutDir',
-      `[boolean] force empty outDir when it's outside of root`,
+      `[boolean] force empty outDir when it's outside of root`
     )
-    .option('-w, --watch', `[boolean] rebuilds when modules have changed on disk`)
+    .option(
+      '-w, --watch',
+      `[boolean] rebuilds when modules have changed on disk`
+    )
     .action(async (root: string, options: BuildOptions & GlobalCLIOptions) => {
       filterDuplicateOptions(options);
-      const config = await getConfig(options as any,
-        'build'
-      );
+      const config = await getConfig(options as any, 'build');
       try {
         await build(config);
-
       } catch (e) {
         createLogger(options.logLevel).error(
           colors.red(`error during build:\n${e.stack}`),
-          { error: e },
+          { error: e }
         );
         process.exit(1);
       } finally {
-        stopProfiler((message) => createLogger(options.logLevel).info(message));
+        stopProfiler(message => createLogger(options.logLevel).info(message));
       }
-    })
+    });
 
   // optimize
   cli
     .command('optimize [root]', 'pre-bundle dependencies')
     .option(
       '--force',
-      `[boolean] force the optimizer to ignore the cache and re-bundle`,
+      `[boolean] force the optimizer to ignore the cache and re-bundle`
     )
     .action(
       async (root: string, options: { force?: boolean } & GlobalCLIOptions) => {
@@ -221,26 +242,26 @@ export const createCli = (cliName: string, configPath?: string) => {
           'serve'
         );
         try {
-          const config = await resolveConfig(
-            userConfig,
-            'serve',
-          )
+          const config = await resolveConfig(userConfig, 'serve');
           await optimizeDeps(config, options.force, true);
         } catch (e) {
           createLogger(options.logLevel).error(
             colors.red(`error when optimizing deps:\n${e.stack}`),
-            { error: e },
+            { error: e }
           );
           process.exit(1);
         }
-      },
-    )
+      }
+    );
 
   cli
     .command('preview [root]', 'locally preview production build')
     .option('--host [host]', `[string] specify hostname`)
     .option('--port <port>', `[number] specify port`)
-    .option('--strictPort', `[boolean] exit if specified port is already in use`)
+    .option(
+      '--strictPort',
+      `[boolean] exit if specified port is already in use`
+    )
     .option('--https', `[boolean] use TLS + HTTP/2`)
     .option('--open [path]', `[boolean | string] open browser on startup`)
     .option('--outDir <dir>', `[string] output directory (default: dist)`)
@@ -248,15 +269,15 @@ export const createCli = (cliName: string, configPath?: string) => {
       async (
         root: string,
         options: {
-          host?: string | boolean
-          port?: number
-          https?: boolean
-          open?: boolean | string
-          strictPort?: boolean
-          outDir?: string
-        } & GlobalCLIOptions,
+          host?: string | boolean;
+          port?: number;
+          https?: boolean;
+          open?: boolean | string;
+          strictPort?: boolean;
+          outDir?: string;
+        } & GlobalCLIOptions
       ) => {
-        filterDuplicateOptions(options)
+        filterDuplicateOptions(options);
         try {
           const server = await preview({
             root,
@@ -274,16 +295,16 @@ export const createCli = (cliName: string, configPath?: string) => {
               https: options.https,
               open: options.open,
             },
-          })
+          });
           server.printUrls();
         } catch (e) {
           createLogger(options.logLevel).error(
             colors.red(`error when starting preview server:\n${e.stack}`),
-            { error: e },
-          )
+            { error: e }
+          );
           process.exit(1);
         } finally {
-          stopProfiler((message) => createLogger(options.logLevel).info(message));
+          stopProfiler(message => createLogger(options.logLevel).info(message));
         }
       }
     );
@@ -353,4 +374,4 @@ export const createCli = (cliName: string, configPath?: string) => {
   cli.version(VERSION);
 
   cli.parse();
-}
+};

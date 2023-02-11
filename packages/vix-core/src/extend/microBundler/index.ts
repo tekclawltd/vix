@@ -74,7 +74,11 @@ export default (options: Options) => {
         build: buildConfig,
         resolve: resolvedConfig.resolve,
         plugins: [
-          ...devServerPlugin({ debug: false }, resolvedConfig.inlineConfig, command),
+          ...devServerPlugin(
+            { debug: false },
+            resolvedConfig.inlineConfig,
+            command
+          ),
         ]
           .filter(Boolean)
           .flat(Number.POSITIVE_INFINITY),

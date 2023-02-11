@@ -3,7 +3,7 @@ import { ifDependenceExist } from '../utils';
 import serverPlugin from './coreServerPlugin';
 import { FastUserConfig } from './coreServerPlugin/types';
 
-const convertBoolean = (opts) => (typeof opts === 'boolean' ? undefined : opts);
+const convertBoolean = opts => (typeof opts === 'boolean' ? undefined : opts);
 
 const loadPlugin = (opts: any, pluginPath: string) => {
   if (opts) {

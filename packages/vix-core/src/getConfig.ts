@@ -37,13 +37,13 @@ const loadUserConfig = async (
   const mergeDevServerOptions = {
     ...devServer,
     ...serverOptions,
-  }
+  };
   const { build, outDir } = browserBuild;
   const mergeBuildOptions = {
     outDir,
     ...build,
     ...buildOptions,
-  }
+  };
   config.devServer = mergeDevServerOptions;
   config.browserBuild.build = mergeBuildOptions;
   const inlineConfig: InlineConfig = Object.assign(
@@ -91,13 +91,13 @@ export default async (
   const inlineConfig: InlineConfig = isConfigExist
     ? await loadUserConfig(options, command)
     : (
-      await resolveConfig(
-        {
-          ...wrapOptions,
-          plugins: [devServerPlugin(wrapOptions, {}, command) as Plugin[]],
-        },
-        command
-      )
-    ).inlineConfig;
+        await resolveConfig(
+          {
+            ...wrapOptions,
+            plugins: [devServerPlugin(wrapOptions, {}, command) as Plugin[]],
+          },
+          command
+        )
+      ).inlineConfig;
   return inlineConfig;
 };

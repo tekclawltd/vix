@@ -52,8 +52,7 @@ export type HandleFunction =
   | SimpleHandleFunction
   | NextHandleFunction
   | ContextNextHandleFunction;
-export interface BrowserBuildOption
-  extends OmitedViteUserConfig {
+export interface BrowserBuildOption extends OmitedViteUserConfig {
   outDir: string;
 }
 export interface DevServerOption extends ServerOptions {
@@ -61,7 +60,7 @@ export interface DevServerOption extends ServerOptions {
   envs?: Record<string, string>;
   adapter?: HandleFunction;
   requireAuth?: ContextrequireAuthFunction;
-  routes?: { [routePath: string]: NextHandleFunction }
+  routes?: { [routePath: string]: NextHandleFunction };
 }
 
 export interface ServerBuildOption extends BuildOptions {

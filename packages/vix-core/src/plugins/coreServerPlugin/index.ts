@@ -61,16 +61,16 @@ export default function serverPlugin(cfg: FastUserConfig = {}): Plugin[] {
       getUserConfig(): FastUserConfig {
         return config;
       },
-      configResolved: (resolvedConfig) => {
+      configResolved: resolvedConfig => {
         command = resolvedConfig.command;
       },
-      configureServer: (server) => {
+      configureServer: server => {
         if ([command === 'serve', developmentServerEntry].every(Boolean)) {
           server.middlewares.use(createMiddleware(server));
-          devServer.routes && Object.entries(devServer.routes)
-          .forEach(([routePath, handler]) => {
+          devServer.routes &&
+            Object.entries(devServer.routes).forEach(([routePath, handler]) => {
               server.middlewares.use(routePath, handler);
-          });
+            });
         }
       },
       closeBundle: async () => {
@@ -118,9 +118,7 @@ export default function serverPlugin(cfg: FastUserConfig = {}): Plugin[] {
             const indents = '               ';
             const formatOutput = (key: string) =>
               logger.info(
-                colors.green(
-                  `${key}${indents}${outputs[key].bytes / 1000}Kib`
-                )
+                colors.green(`${key}${indents}${outputs[key].bytes / 1000}Kib`)
               );
             for (const key of Object.keys(outputs)) {
               formatOutput(key);

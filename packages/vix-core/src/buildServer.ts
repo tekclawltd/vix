@@ -8,7 +8,7 @@ import {
   FastUserConfig,
 } from './plugins/coreServerPlugin/types';
 
-const graphqlPlugin = (gql) =>
+const graphqlPlugin = gql =>
   gql &&
   require('@luckycatfactory/esbuild-graphql-loader').default({
     filterRegex: /\.(gql|graphql)$/,
