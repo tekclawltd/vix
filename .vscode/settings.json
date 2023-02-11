@@ -1,0 +1,25 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.all": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.tabSize": 2,
+  "eslint.lintTask.enable": true,
+  "eslint.workingDirectories": [
+    "./packages/vix-electron",
+    "./packages/vix-utils",
+    "./packages/vix-yaml",
+    "./packages/vix-core"
+  ],
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/.eslintcache": true,
+    "**/*.map": true,
+    "**/*.tsbuildinfo": true,
+    "**/.rollup.cache": true
+  },
+  "editor.formatOnSave": true
+}

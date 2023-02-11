@@ -1,0 +1,42 @@
+{
+  "name": "@tekclaw/vix-electron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "typings": "src/index.ts",
+  "files": [
+    "dist",
+    "inject",
+    "electron-main",
+    "public",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
+    "lint": "eslint ./src"
+  },
+  "keywords": [
+    "vite-plugin",
+    "vite",
+    "electron",
+    "electron-builder"
+  ],
+  "devDependencies": {
+    "@types/node": "^16.10.9",
+    "electron": "^23.0.0",
+    "electron-builder": "^22.10.3",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.8.3",
+    "vite": "^2.6.7"
+  },
+  "dependencies": {
+    "@tekclaw/scaffold": "^1.0.0",
+    "@tekclaw/vix-utils": "^1.0.0",
+    "builtin-modules": "^3.2.0",
+    "deepmerge": "^4.2.2",
+    "electron-devtools-installer": "^3.2.0",
+    "esbuild": "^0.13.6",
+    "fs-extra": "^10.0.0"
+  }
+}

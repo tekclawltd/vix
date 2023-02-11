@@ -1,0 +1,28 @@
+{
+  "name": "@tekclaw/scaffold",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo \"no build script\"",
+    "watch": "echo \"no watch script\"",
+    "lint": "echo \"no lint script\""
+  },
+  "files": [
+    "*"
+  ],
+  "peerDependencies": {
+    "@microsoft/eslint-plugin-sdl": "^0.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-functional": "^3.7.2",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-mui-unused-classes": "^1.0.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unicorn": "^36.0.0",
+    "prettier": "^2.4.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-idiomatic-order": "^8.1.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {},
+  "files": [],
+  "references": [
+    { "path": "packages/vix-core" },
+    { "path": "packages/vix-electron" },
+    { "path": "packages/vix-utils" },
+    { "path": "packages/vix-yaml" }
+  ],
+  "exclude": ["packages/scaffold"]
+}

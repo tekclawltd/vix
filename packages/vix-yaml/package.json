@@ -1,0 +1,21 @@
+{
+  "name": "@tekclaw/vix-yaml",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "devDependencies": {
+    "@rollup/pluginutils": "^3.1.0",
+    "@types/js-yaml": "^4.0.4",
+    "esprima": "^4.0.1",
+    "js-yaml": "^4.1.0",
+    "tosource": "^2.0.0-alpha.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
+    "lint": "eslint ./src"
+  },
+  "author": "",
+  "license": "ISC"
+}
