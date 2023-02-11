@@ -6,6 +6,9 @@
     "watch": "echo \"no watch script\"",
     "lint": "echo \"no lint script\""
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "*"
   ],

@@ -4,6 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "typings": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist",
     "inject",

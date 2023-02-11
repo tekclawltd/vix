@@ -7,6 +7,9 @@
   "bin": {
     "vix": "dist/bin/cli.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "bin",
     "dist",
