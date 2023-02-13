@@ -13,8 +13,9 @@ import { Options as OptimizePersistOptions } from '../optimizePersistPlugin';
 import { RollupYamlOptions } from '@rollup/plugin-yaml';
 import { RollupGraphqlOptions } from '@rollup/plugin-graphql';
 import { ReactPresetPluginOptions } from '../presetReact';
+import { Options as CommonJSOptions } from 'vite-plugin-commonjs';
 
-export const PLUGIN_NAME = `${CLI_ALIAS}:core-server-plugin`;
+export const PLUGIN_NAME = `${CLI_ALIAS}:browser-build-plugin`;
 
 type OmitedViteUserConfig = Omit<ViteUserConfig, 'server | plugins'>;
 
@@ -78,6 +79,7 @@ export interface PresetsPluginOptions {
   yaml?: RollupYamlOptions | boolean;
   graphql?: RollupGraphqlOptions | boolean;
   react?: ReactPresetPluginOptions | boolean;
+  commonjs?: CommonJSOptions | boolean;
 }
 
 export interface PresetsOption {
@@ -85,7 +87,6 @@ export interface PresetsOption {
   loggerPrefix?: string;
   forceLoadJsAsJsx?: boolean;
 }
-
 export type IncludeType = string[] | RegExp[];
 
 export interface HooksOption {

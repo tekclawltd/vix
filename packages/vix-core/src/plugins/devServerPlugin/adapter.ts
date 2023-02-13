@@ -1,6 +1,6 @@
 import colors from 'picocolors';
 import path from 'path';
-import { HandleFunctionContext } from './types';
+import { HandleFunctionContext } from '../browserBuildPlugin/types';
 
 export default (
   req: any,

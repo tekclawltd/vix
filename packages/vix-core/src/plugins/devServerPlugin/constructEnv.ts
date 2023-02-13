@@ -1,5 +1,5 @@
 import { register } from '../../register';
-import { FastUserConfig } from './types';
+import { FastUserConfig } from '../browserBuildPlugin/types';
 
 // for supporting module exports
 global.exports = global.exports || {

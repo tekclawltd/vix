@@ -4,7 +4,7 @@ import devServerPlugin from '../../plugins';
 import { OutputOptions } from 'rollup';
 import { IncomingMessage, ServerResponse } from 'http';
 import { UserConfig, BuildOptions, ResolvedConfig } from 'vite';
-import { FastUserConfig } from '../../plugins/coreServerPlugin/types';
+import { FastUserConfig } from '../../plugins/browserBuildPlugin/types';
 import deepmerge from 'deepmerge';
 
 export type NextFunction = (err?: any) => void;
@@ -74,21 +74,17 @@ export default (options: Options) => {
         build: buildConfig,
         resolve: resolvedConfig.resolve,
         plugins: [
-          ...devServerPlugin(
-            { debug: false },
-            resolvedConfig.inlineConfig,
-            command
-          ),
+          ...devServerPlugin({ debug: false }, resolvedConfig.inlineConfig, command),
         ]
           .filter(Boolean)
           .flat(Number.POSITIVE_INFINITY),
       };
     },
-    configureServer(server: ViteDevServer) {
+    async configureServer(server: ViteDevServer): Promise<void> {
       devServer = server;
       entries.forEach((entry: string) => server.watcher.add(entry));
       // dev pre build
-      build(microBundleConfig);
+      await build(microBundleConfig);
     },
 
     async handleHotUpdate(ctx: HmrContext) {
@@ -102,9 +98,9 @@ export default (options: Options) => {
       }
     },
 
-    closeBundle(): void {
+    async closeBundle(): Promise<void> {
       // prod build
-      build(microBundleConfig);
+      await build(microBundleConfig);
     },
   };
 };

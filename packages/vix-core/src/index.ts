@@ -1,6 +1,6 @@
 import microBundler from './extend/microBundler';
 import copy from './extend/copy';
-import { FastUserConfig } from './plugins/coreServerPlugin/types';
+import { FastUserConfig } from './plugins/browserBuildPlugin/types';
 export * from 'vite';
 export { createCli } from './cli';
 export { default as fastCorePlugins } from './plugins';

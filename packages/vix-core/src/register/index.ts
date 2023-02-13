@@ -116,8 +116,8 @@ export function register(
         console.log(warning.text);
       }
     }
-    if (format === 'esm') return js;
-    return removeNodePrefix(js);
+    if (format === 'esm') return js
+    return removeNodePrefix(js)
   };
 
   function compileHook(code: any, filename: any) {
@@ -128,7 +128,7 @@ export function register(
       compiling = true;
       // @ts-ignore
       Module._cache = internalModuleCache;
-      if (include?.map(r => new RegExp(r)).some(r => r.test(filename))) {
+      if (include?.map((r) => new RegExp(r)).some((r) => r.test(filename))) {
         return compile(code, filename);
       }
       return code;

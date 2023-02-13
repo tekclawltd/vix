@@ -10,7 +10,7 @@ import {
   ServerOptions,
 } from 'vite';
 
-import devServerPlugin from './plugins';
+import corePlugins from './plugins';
 import { CLI_ALIAS, GlobalCLIOptions } from './types';
 import { cleanOptions, makeLogger } from './utils';
 
@@ -28,8 +28,9 @@ const loadUserConfig = async (
     options.root,
     options.logLevel
   );
-  const { settings = {}, plugins = [], devServer, browserBuild = {} } = config;
-  const { loggerPrefix } = settings;
+  const { presets = {}, plugins = [], devServer, browserBuild } = config;
+
+  const { loggerPrefix } = presets;
   const logger = makeLogger({
     logLevel: 'info',
     loggerPrefix: loggerPrefix || `[${CLI_ALIAS}]`,
@@ -37,15 +38,19 @@ const loadUserConfig = async (
   const mergeDevServerOptions = {
     ...devServer,
     ...serverOptions,
-  };
-  const { build, outDir } = browserBuild;
-  const mergeBuildOptions = {
-    outDir,
-    ...build,
-    ...buildOptions,
-  };
-  config.devServer = mergeDevServerOptions;
-  config.browserBuild.build = mergeBuildOptions;
+  }
+
+  if (browserBuild) {
+    const { build = {}, outDir = '' } = browserBuild;
+    const mergeBuildOptions = {
+      outDir,
+      ...build,
+      ...buildOptions,
+    }
+    config.devServer = mergeDevServerOptions;
+    config.browserBuild.build = mergeBuildOptions;
+  }
+
   const inlineConfig: InlineConfig = Object.assign(
     {
       root: options.root,
@@ -56,13 +61,13 @@ const loadUserConfig = async (
       customLogger: logger,
       plugins: [
         ...plugins,
-        devServerPlugin(options, config, command) as Plugin[],
+        corePlugins(options, config, command) as Plugin[],
       ]
         .flat(Number.POSITIVE_INFINITY)
         .filter(Boolean),
     },
     command === 'serve' && {
-      server: serverOptions,
+      server: mergeDevServerOptions,
     },
     command === 'build' && {
       build: buildOptions,
@@ -91,13 +96,14 @@ export default async (
   const inlineConfig: InlineConfig = isConfigExist
     ? await loadUserConfig(options, command)
     : (
-        await resolveConfig(
-          {
-            ...wrapOptions,
-            plugins: [devServerPlugin(wrapOptions, {}, command) as Plugin[]],
-          },
-          command
-        )
-      ).inlineConfig;
+      await resolveConfig(
+        {
+          ...wrapOptions,
+          plugins: [corePlugins(wrapOptions, {}, command) as Plugin[]],
+        },
+        command
+      )
+    ).inlineConfig;
+
   return inlineConfig;
 };

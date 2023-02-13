@@ -1,17 +1,25 @@
 import { GlobalCLIOptions } from '../types';
 import { ifDependenceExist } from '../utils';
-import serverPlugin from './coreServerPlugin';
-import { FastUserConfig } from './coreServerPlugin/types';
+import { FastUserConfig } from './browserBuildPlugin/types';
 
-const convertBoolean = opts => (typeof opts === 'boolean' ? undefined : opts);
+const convertBoolean = (opts?: any) =>
+  typeof opts === 'boolean' ? undefined : opts;
+interface PluginOptions {
+  moduleName?: string;
+  config?: any;
+}
 
-const loadPlugin = (opts: any, pluginPath: string) => {
-  if (opts) {
+const loadPlugin = (
+  shouldLoaded: boolean,
+  pluginPath: string,
+  options?: PluginOptions
+) => {
+  if (shouldLoaded) {
     const plugin = require(pluginPath);
-    const cleanOptions = convertBoolean(opts);
+    const cleanOptions = convertBoolean(options?.config);
     return typeof plugin === 'function'
       ? plugin(cleanOptions)
-      : plugin.default(cleanOptions);
+      : plugin[options?.moduleName || 'default'](cleanOptions);
   }
   return false;
 };
@@ -21,7 +29,7 @@ export default (
   config: FastUserConfig,
   command: 'build' | 'serve'
 ) => {
-  const { presets = {} } = config;
+  const { presets = {}, browserBuild, serverBuild, devServer, hooks } = config;
   const { debug } = options;
   const { plugins: presetsPlugins = {} } = presets;
   const {
@@ -29,13 +37,38 @@ export default (
     graphql = ifDependenceExist('graphql'),
     react = true,
     optimizePersist = true,
+    commonjs = true,
   } = presetsPlugins;
   return [
-    serverPlugin(config),
-    loadPlugin(react, './presetReact'),
-    loadPlugin(yaml, '@rollup/plugin-yaml'),
-    loadPlugin(graphql, '@rollup/plugin-graphql'),
-    loadPlugin(optimizePersist, './optimizePersistPlugin'),
-    command === 'serve' && loadPlugin(debug, 'vite-plugin-inspect'),
+    loadPlugin([browserBuild].every(Boolean), './browserBuildPlugin', {
+      config,
+    }),
+    loadPlugin([serverBuild].every(Boolean), './serverBuildPlugin', { config }),
+    loadPlugin([devServer].every(Boolean), './devServerPlugin', { config }),
+    loadPlugin([commonjs].every(Boolean), 'vite-plugin-commonjs', {
+      config: commonjs,
+    }),
+    loadPlugin([browserBuild, react].every(Boolean), './presetReact', {
+      config: react,
+    }),
+    loadPlugin([browserBuild, yaml].every(Boolean), '@rollup/plugin-yaml', {
+      config: yaml,
+    }),
+    loadPlugin(
+      [browserBuild, graphql].every(Boolean),
+      '@rollup/plugin-graphql',
+      { config: graphql }
+    ),
+    loadPlugin(
+      [browserBuild, optimizePersist].every(Boolean),
+      './optimizePersistPlugin',
+      { config: optimizePersist }
+    ),
+    loadPlugin([hooks].every(Boolean), './eventHooksPlugin'),
+    loadPlugin(
+      [command === 'serve', browserBuild, debug].every(Boolean),
+      'vite-plugin-inspect',
+      { config: debug }
+    ),
   ].filter(Boolean);
 };
