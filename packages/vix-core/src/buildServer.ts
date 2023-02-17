@@ -28,8 +28,8 @@ export function cleanOptions<Options extends ServerBuildOption>(
   return options;
 }
 
-const buildBundle = async (options: FastUserConfig) => {
-  const { serverBuild, presets = {} } = options;
+const buildBundle = async (config: FastUserConfig, mode: string) => {
+  const { serverBuild, presets = {} } = config;
   const {
     entry,
     outdir,
@@ -40,14 +40,15 @@ const buildBundle = async (options: FastUserConfig) => {
   const { graphql = ifDependenceExist('graphql') } = presetsPlugins;
   const { alias } = resolve;
   const entryPoints = Array.isArray(entry) ? entry : [entry];
-  const config: any = deepmerge(
+
+  const buildConfig: any = deepmerge(
     {
       platform: 'node',
       allowOverwrite: true,
       entryPoints,
       outdir,
-      minify: true,
-      metafile: true,
+      minify: mode === 'production',
+      metafile: mode !== 'production',
       absWorkingDir: process.cwd(),
       target: ['node12'],
       external: builtinModules,
@@ -59,14 +60,14 @@ const buildBundle = async (options: FastUserConfig) => {
     },
     cleanOptions(serverBuild)
   );
-  return build(config);
+  return build(buildConfig);
 };
 
 
-export default async (config: FastUserConfig, logger: Logger) => {
+export default async (config: FastUserConfig, logger: Logger, mode: string = 'production') => {
   let report;
   const { serverBuild } = config;
-  const { metafile, entry, ...restServerBuild } = serverBuild!;
+  const { metafile = mode !== 'production', entry, ...restServerBuild } = serverBuild!;
   let serverBuildOptions: any = restServerBuild;
   let metaOutputFile: string | null = null;
   let outdir: string | null = null;
@@ -92,7 +93,7 @@ export default async (config: FastUserConfig, logger: Logger) => {
   const result = await buildBundle({
     ...config,
     serverBuild: serverBuildOptions,
-  });
+  }, mode);
   if (metafile) {
     report = await analyzeMetafile(result.metafile!, {
       color: true,

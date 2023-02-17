@@ -15,7 +15,7 @@ export default function browserBuildPlugin(cfg: FastUserConfig = {}): Plugin[] {
       // put core plugin to post order
       // https://vitejs.dev/guide/api-plugin.html#plugin-ordering
       enforce: 'pre',
-      config: () => {
+      config: (config) => {
         const viteConfig = deepmerge.all(
           [
             defineConfig({
@@ -24,18 +24,24 @@ export default function browserBuildPlugin(cfg: FastUserConfig = {}): Plugin[] {
                 `node_modules/.${CLI_ALIAS}`
               ),
             }) as any,
+            {
+              build: {
+                emptyOutDir: true,
+                sourcemap: config.mode !== 'production'
+              }
+            },
             shouldLoadjsAsJsxPlugin(forceLoadJsAsJsx, cfg),
             viteOptions,
             {
               fastUserConfig: cfg,
-            },
+            }
           ].filter(Boolean)
         );
         return viteConfig;
       },
       getUserConfig(): FastUserConfig {
         return cfg;
-      },
+      }
     } as ServerPlugin,
   ];
 

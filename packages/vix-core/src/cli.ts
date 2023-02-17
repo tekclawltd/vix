@@ -207,7 +207,7 @@ export const createCli = (cliName: string, configPath?: string) => {
           const logger = createLogger(options.logLevel, {
             prefix: CLI_ALIAS
           });
-          await buildServer(fastConfig, logger);
+          await buildServer(fastConfig, logger, options.mode);
         }
 
       } catch (e) {

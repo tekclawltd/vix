@@ -53,7 +53,8 @@ export type HandleFunction =
   | SimpleHandleFunction
   | NextHandleFunction
   | ContextNextHandleFunction;
-export interface BrowserBuildOption extends OmitedViteUserConfig {
+export interface BrowserBuildOption
+  extends OmitedViteUserConfig {
   outDir: string;
 }
 export interface DevServerOption extends ServerOptions {
@@ -61,7 +62,7 @@ export interface DevServerOption extends ServerOptions {
   envs?: Record<string, string>;
   adapter?: HandleFunction;
   requireAuth?: ContextrequireAuthFunction;
-  routes?: { [routePath: string]: NextHandleFunction };
+  routes?: { [routePath: string]: NextHandleFunction }
 }
 
 export interface ServerBuildOption extends BuildOptions {
@@ -90,8 +91,8 @@ export interface PresetsOption {
 export type IncludeType = string[] | RegExp[];
 
 export interface HooksOption {
-  onBefore?: (config: FastUserConfig) => void;
-  onEnd?: (config: FastUserConfig) => void;
+  onBefore?: (config?: FastUserConfig) => void;
+  onEnd?: (config?: FastUserConfig) => void;
 }
 export interface FastUserConfig {
   browserBuild?: BrowserBuildOption;

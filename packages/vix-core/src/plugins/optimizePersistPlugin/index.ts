@@ -33,10 +33,7 @@ function optimizePersistPlugin({
     apply: 'serve',
     configResolved(resolvedConfig) {
       cacheConfig = {
-        cacheJsonPath: path.join(
-          resolvedConfig.cacheDir,
-          CLI_ALIAS + '.optimizeDeps.json'
-        ),
+        cacheJsonPath: path.join(resolvedConfig.cacheDir, CLI_ALIAS + '.optimizeDeps.json'),
         field: CLI_ALIAS,
       };
     },
@@ -74,7 +71,7 @@ function optimizePersistPlugin({
 
       function update() {
         newDeps = Object.keys(optimizeDepsMetadata?.optimized || {})
-          .filter(i => !forceIncluded.includes(i))
+          .filter((i) => !forceIncluded.includes(i))
           .filter(filter);
         info(colors.green(`new deps: ${newDeps.join(', ')}`), {
           timestamp: true,
