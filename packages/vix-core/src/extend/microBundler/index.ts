@@ -4,7 +4,10 @@ import devServerPlugin from '../../plugins';
 import { OutputOptions } from 'rollup';
 import { IncomingMessage, ServerResponse } from 'http';
 import { UserConfig, BuildOptions, ResolvedConfig } from 'vite';
-import { FastUserConfig } from '../../plugins/browserBuildPlugin/types';
+import {
+  CLI_ALIAS,
+  FastUserConfig,
+} from '../../plugins/browserBuildPlugin/types';
 import deepmerge from 'deepmerge';
 
 export type NextFunction = (err?: any) => void;
@@ -22,7 +25,7 @@ export declare interface FastResolvedConfig extends ResolvedConfig {
   fastUserConfig?: FastUserConfig;
 }
 
-export const PluginName = 'fast:client-bundler-plugin';
+export const PluginName = `${CLI_ALIAS}:client-bundler-plugin`;
 
 export default (options: Options) => {
   let command: 'build' | 'serve';
@@ -74,7 +77,11 @@ export default (options: Options) => {
         build: buildConfig,
         resolve: resolvedConfig.resolve,
         plugins: [
-          ...devServerPlugin({ debug: false }, resolvedConfig.inlineConfig, command),
+          ...devServerPlugin(
+            { debug: false },
+            resolvedConfig.inlineConfig,
+            command
+          ),
         ]
           .filter(Boolean)
           .flat(Number.POSITIVE_INFINITY),
