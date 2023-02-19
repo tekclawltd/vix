@@ -13,7 +13,7 @@ import {
 } from './plugins/browserBuildPlugin/types';
 import { Logger } from 'vite';
 
-const graphqlPlugin = (gql) =>
+const graphqlPlugin = gql =>
   gql &&
   require('@luckycatfactory/esbuild-graphql-loader').default({
     filterRegex: /\.(gql|graphql)$/,
@@ -48,7 +48,7 @@ const buildBundle = async (config: FastUserConfig, mode: string) => {
       entryPoints,
       outdir,
       minify: mode === 'production',
-      metafile: mode !== 'production',
+      metafile: true,
       absWorkingDir: process.cwd(),
       target: ['node12'],
       external: builtinModules,
@@ -63,15 +63,21 @@ const buildBundle = async (config: FastUserConfig, mode: string) => {
   return build(buildConfig);
 };
 
-
-export default async (config: FastUserConfig, logger: Logger, mode: string = 'production') => {
+export default async (
+  config: FastUserConfig,
+  logger: Logger,
+  mode: string = 'production'
+) => {
   let report;
   const { serverBuild } = config;
-  const { metafile = mode !== 'production', entry, ...restServerBuild } = serverBuild!;
+  const {
+    metafile = mode !== 'production',
+    entry,
+    ...restServerBuild
+  } = serverBuild!;
   let serverBuildOptions: any = restServerBuild;
   let metaOutputFile: string | null = null;
   let outdir: string | null = null;
-
   if (Array.isArray(entry)) {
     outdir = serverBuild!.outdir || './dist';
     metaOutputFile = 'build.meta.json';
@@ -90,10 +96,14 @@ export default async (config: FastUserConfig, logger: Logger, mode: string = 'pr
     };
   }
 
-  const result = await buildBundle({
-    ...config,
-    serverBuild: serverBuildOptions,
-  }, mode);
+  const result = await buildBundle(
+    {
+      ...config,
+      serverBuild: serverBuildOptions,
+    },
+    mode
+  );
+
   if (metafile) {
     report = await analyzeMetafile(result.metafile!, {
       color: true,
@@ -107,9 +117,7 @@ export default async (config: FastUserConfig, logger: Logger, mode: string = 'pr
     const indents = '               ';
     const formatOutput = (key: string) =>
       logger.info(
-        colors.green(
-          `${key}${indents}${outputs[key].bytes / 1000}Kib`
-        )
+        colors.green(`${key}${indents}${outputs[key].bytes / 1000}Kib`)
       );
     for (const key of Object.keys(outputs)) {
       formatOutput(key);
@@ -117,4 +125,4 @@ export default async (config: FastUserConfig, logger: Logger, mode: string = 'pr
     logger.info('');
   };
   result?.metafile && printReport(result.metafile);
-}
+};
