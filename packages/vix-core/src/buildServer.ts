@@ -40,7 +40,6 @@ const buildBundle = async (config: FastUserConfig, mode: string) => {
   const { graphql = ifDependenceExist('graphql') } = presetsPlugins;
   const { alias } = resolve;
   const entryPoints = Array.isArray(entry) ? entry : [entry];
-
   const buildConfig: any = deepmerge(
     {
       platform: 'node',
@@ -50,8 +49,8 @@ const buildBundle = async (config: FastUserConfig, mode: string) => {
       minify: mode === 'production',
       metafile: true,
       absWorkingDir: process.cwd(),
-      target: ['node12'],
-      external: builtinModules,
+      target: ['node14'],
+      external: [...builtinModules],
       format: 'cjs',
       bundle: true,
       plugins: [alias && resovleAlias(alias), graphqlPlugin(graphql)]
