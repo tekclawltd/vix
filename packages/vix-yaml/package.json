@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@rollup/pluginutils": "^3.1.0",
-    "@types/js-yaml": "^4.0.4",
+    "@types/js-yaml": "^4.0.5",
     "esprima": "^4.0.1",
     "js-yaml": "^4.1.0",
     "tosource": "^2.0.0-alpha.3"
