@@ -11,16 +11,16 @@ import {
 } from './utils';
 
 vi.mock('vite', () => {
-  return ({
+  return {
     createLogger: vi.fn(),
-  });
+  };
 });
 vi.mock('path', () => {
-  return ({
+  return {
     default: {
-      resolve: vi.fn((val)=> `./mockPath/${val}`),
-    }
-  });
+      resolve: vi.fn(val => `./mockPath/${val}`),
+    },
+  };
 });
 let mockNpmVersion = '6.00';
 let mockNodeVersion = '14.00';
@@ -29,15 +29,15 @@ let withError = false;
 const mockExec = (cmd: string) => {
   let output = withError
     ? {
-      stdout: '',
-      stderr: 'fake error',
-      code: 'somecode',
-    }
+        stdout: '',
+        stderr: 'fake error',
+        code: 'somecode',
+      }
     : {
-      stdout: '',
-      stderr: undefined,
-      code: undefined,
-    };
+        stdout: '',
+        stderr: undefined,
+        code: undefined,
+      };
   switch (cmd) {
     case 'npm -v':
       output = {
@@ -60,7 +60,7 @@ const mockExec = (cmd: string) => {
 vi.mock('shelljs', () => {
   return {
     default: {
-      exec: vi.fn((cmd) => mockExec(cmd)),
+      exec: vi.fn(cmd => mockExec(cmd)),
       echo: vi.fn(),
       rm: vi.fn(),
     },
@@ -83,7 +83,7 @@ describe('cleanOptions()', () => {
       filter: 'test',
       m: 'test',
       mode: 'test',
-      force: false
+      force: false,
     };
 
     expect(cleanOptions(options)).toStrictEqual({});
@@ -91,18 +91,18 @@ describe('cleanOptions()', () => {
 
   test('should resolve ourDir path', () => {
     const options = {
-      outDir: 'dist'
+      outDir: 'dist',
     };
 
     expect(cleanOptions(options as any)).toStrictEqual({
-      outDir: path.resolve(options.outDir)
+      outDir: path.resolve(options.outDir),
     });
   });
 
   test('should delete undefined keys', () => {
     const options = {
       outDir: undefined,
-      root: undefined
+      root: undefined,
     };
 
     expect(cleanOptions(options as any)).toStrictEqual({});
@@ -198,8 +198,8 @@ describe('installSymlink()', () => {
 
   describe('when has error during installation', () => {
     beforeAll(() => {
-      vi.spyOn(console, 'error').mockImplementation(() => ({}) as any);
-      vi.spyOn(process, 'exit').mockImplementation(() => ({}) as any);
+      vi.spyOn(console, 'error').mockImplementation(() => ({} as any));
+      vi.spyOn(process, 'exit').mockImplementation(() => ({} as any));
       withError = true;
       installSymlink(CLI_ALIAS);
     });
