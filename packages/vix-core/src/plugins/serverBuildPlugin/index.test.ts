@@ -1,42 +1,37 @@
-import { vi, describe, expect, test, afterEach } from 'vitest';
+import { vi, describe, expect, test, beforeEach, afterEach } from 'vitest';
 import serverBuildPlugin, {PLUGIN_NAME} from './index';
 import buildServer from '../../buildServer';
+import type { Plugin } from 'vite';
 
 describe('Return As Plugin', () => {
-  test('Return Object Structure keys', () => {
-    const OBJ_KEYS = ['name', 'enforce', 'apply', 'config', 'closeBundle'];
-    const plugin = serverBuildPlugin({});
-    for (let key of OBJ_KEYS) {
-      expect(plugin.hasOwnProperty(key)).toBeTruthy();
-    }
+  let plugin: Plugin;
+
+  beforeEach(() => {
+    plugin = serverBuildPlugin({});
   });
 
-  test('Check name, enforce and apply are string type', () => {
-    const OBJ_KEYS = ['name', 'enforce', 'apply'];
-    const plugin = serverBuildPlugin({});
-    for (let key of OBJ_KEYS) {
-      expect(plugin[key]).toBeTypeOf('string');
-    }
+  test('Should return Object Structure keys', () => {
+    ['name', 'enforce', 'apply', 'config', 'closeBundle'].forEach(key => expect(plugin.hasOwnProperty(key)).toBeTruthy());
   });
 
-  test('Check config, and closeBunlde are function type', () => {
-    const OBJ_KEYS = ['config', 'closeBundle'];
-    const plugin = serverBuildPlugin({});
-    for (let key of OBJ_KEYS) {
-      expect(plugin[key]).toBeTypeOf('function');
-    }
+  test('Should check name, enforce and apply are string type', () => {
+    ['name', 'enforce', 'apply'].forEach(key => expect(plugin[key]).toBeTypeOf('string'));
+  });
+
+  test('Should check config, and closeBunlde are function type', () => {
+    ['config', 'closeBundle'].forEach(key => expect(plugin[key]).toBeTypeOf('function'));
   });
 });
 
 describe('serverBuildPlugin Function()', () => {
-  test('Check function return value', () => {
+  test('Should return an object with expected value', () => {
     const plugin = serverBuildPlugin({});
     expect(plugin.name).toBe(PLUGIN_NAME);;
     expect(plugin.enforce).toBe('post');;
     expect(plugin.apply).toBe('build');;
   });
 
-  test('Return result should Match Snapshot', () => {
+  test('Should return an object matches snapshot', () => {
     const plugin = serverBuildPlugin({});
     expect(plugin).toMatchSnapshot();
   });
@@ -48,7 +43,7 @@ vi.mock('../../buildServer', () => {
   };
 });
 
-describe('Test serverBuildPlugin().config() and closeBundle()', () => {
+describe('Test serverBuildPlugin().config() and serverBuildPlugin().closeBundle()', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -58,37 +53,39 @@ describe('Test serverBuildPlugin().config() and closeBundle()', () => {
     mode: 'fakeMode'
   };
 
-  test('When fastconfig.serverBuild is truthy', async () => {
-    const mockConfig = {
-      serverBuild: {
-        entry: 'mockEntry'
-      }
-    };
-    const plugin1: any = serverBuildPlugin(mockConfig);
-    plugin1.config(mockOption);
-    await plugin1.closeBundle();
-    expect(buildServer).toBeCalledWith(mockConfig, mockOption.customLogger, mockOption.mode) 
-  });
+  describe('Test fastconfig.serverBuild value', () => {
+    test('When its entry property has truthy value, should call buildServer()', async () => {
+      const mockConfig = {
+        serverBuild: {
+          entry: 'mockEntry'
+        }
+      };
+      const plugin1: any = serverBuildPlugin(mockConfig);
+      plugin1.config(mockOption);
+      await plugin1.closeBundle();
+      expect(buildServer).toBeCalledWith(mockConfig, mockOption.customLogger, mockOption.mode) 
+    });
 
-  test('When fastconfig.serverBuild.entry is falsy', async () => {
-    const mockConfig = {
-      serverBuild: {
-        entry: ''
-      }
-    };
-    const plugin1: any = serverBuildPlugin(mockConfig);
-    plugin1.config(mockOption);
-    await plugin1.closeBundle();
-    expect(buildServer).not.toHaveBeenCalled();
-  });
+    test('When its entry property has falsy value, should not call buildServer()', async () => {
+      const mockConfig = {
+        serverBuild: {
+          entry: ''
+        }
+      };
+      const plugin1: any = serverBuildPlugin(mockConfig);
+      plugin1.config(mockOption);
+      await plugin1.closeBundle();
+      expect(buildServer).not.toHaveBeenCalled();
+    });
 
-  test('When fastconfig.serverBuild is falsy', async () => {
-    const mockConfig = {
-      serverBuild: ''
-    };
-    const plugin1: any = serverBuildPlugin(mockConfig as any);
-    plugin1.config(mockOption);
-    await plugin1.closeBundle();
-    expect(buildServer).not.toHaveBeenCalled();
+    test('When it doesn\'t have entry property, should not call buildServer()', async () => {
+      const mockConfig = {
+        serverBuild: ''
+      };
+      const plugin1: any = serverBuildPlugin(mockConfig as any);
+      plugin1.config(mockOption);
+      await plugin1.closeBundle();
+      expect(buildServer).not.toHaveBeenCalled();
+    });
   });
 });
