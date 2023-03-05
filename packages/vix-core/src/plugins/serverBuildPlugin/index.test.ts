@@ -35,6 +35,11 @@ describe('serverBuildPlugin Function()', () => {
     expect(plugin.enforce).toBe('post');;
     expect(plugin.apply).toBe('build');;
   });
+
+  test('Return result should Match Snapshot', () => {
+    const plugin = serverBuildPlugin({});
+    expect(plugin).toMatchSnapshot();
+  });
 });
 
 vi.mock('../../buildServer', () => {
