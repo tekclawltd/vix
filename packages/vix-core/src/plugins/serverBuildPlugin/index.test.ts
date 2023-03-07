@@ -2,6 +2,7 @@ import { vi, describe, expect, test, beforeEach, afterEach } from 'vitest';
 import serverBuildPlugin, {PLUGIN_NAME} from './index';
 import buildServer from '../../buildServer';
 import type { Plugin } from 'vite';
+import { FastUserConfig } from '../browserBuildPlugin/types';
 
 describe('Return As Plugin', () => {
   let plugin: Plugin;
@@ -10,7 +11,7 @@ describe('Return As Plugin', () => {
     plugin = serverBuildPlugin({});
   });
 
-  test('Should return Object Structure keys', () => {
+  test('Should check return object Structure keys', () => {
     ['name', 'enforce', 'apply', 'config', 'closeBundle'].forEach(key => expect(plugin.hasOwnProperty(key)).toBeTruthy());
   });
 
@@ -55,7 +56,7 @@ describe('Test serverBuildPlugin().config() and serverBuildPlugin().closeBundle(
 
   describe('Test fastconfig.serverBuild value', () => {
     test('When its entry property has truthy value, should call buildServer()', async () => {
-      const mockConfig = {
+      const mockConfig: FastUserConfig = {
         serverBuild: {
           entry: 'mockEntry'
         }
@@ -67,7 +68,7 @@ describe('Test serverBuildPlugin().config() and serverBuildPlugin().closeBundle(
     });
 
     test('When its entry property has falsy value, should not call buildServer()', async () => {
-      const mockConfig = {
+      const mockConfig: FastUserConfig = {
         serverBuild: {
           entry: ''
         }
@@ -79,10 +80,8 @@ describe('Test serverBuildPlugin().config() and serverBuildPlugin().closeBundle(
     });
 
     test('When it doesn\'t have entry property, should not call buildServer()', async () => {
-      const mockConfig = {
-        serverBuild: ''
-      };
-      const plugin1: any = serverBuildPlugin(mockConfig as any);
+      const mockConfig: FastUserConfig = {};
+      const plugin1: any = serverBuildPlugin(mockConfig);
       plugin1.config(mockOption);
       await plugin1.closeBundle();
       expect(buildServer).not.toHaveBeenCalled();
