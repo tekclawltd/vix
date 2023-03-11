@@ -1,0 +1,11 @@
+// Vitest Snapshot v1
+
+exports[`serverBuildPlugin Function() > Should return an object matches snapshot 1`] = `
+{
+  "apply": "build",
+  "closeBundle": [Function],
+  "config": [Function],
+  "enforce": "post",
+  "name": "vix:server-build-plugin",
+}
+`;
