@@ -39,7 +39,6 @@ export default (
     optimizePersist = true,
     commonjs = true,
   } = presetsPlugins;
-
   return [
     loadPlugin([browserBuild].every(Boolean), './browserBuildPlugin', {
       config,
@@ -49,8 +48,12 @@ export default (
     loadPlugin([commonjs].every(Boolean), 'vite-plugin-commonjs', {
       config: commonjs,
     }),
-    loadPlugin([browserBuild, react].every(Boolean), './presetReact'),
-    loadPlugin([browserBuild, yaml].every(Boolean), '@rollup/plugin-yaml'),
+    loadPlugin([browserBuild, react].every(Boolean), './presetReact', {
+      config: react,
+    }),
+    loadPlugin([browserBuild, yaml].every(Boolean), '@rollup/plugin-yaml', {
+      config: yaml,
+    }),
     loadPlugin(
       [browserBuild, graphql].every(Boolean),
       '@rollup/plugin-graphql',
