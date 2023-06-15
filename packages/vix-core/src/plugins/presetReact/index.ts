@@ -20,7 +20,7 @@ export interface ReactPresetPluginOptions extends Options {
 
 export default function reactPlugin({
   removeDevtoolsInProd = false,
-  injectReact = false,
+  injectReact = true,
   ...restReactOptions
 }: ReactPresetPluginOptions = {}): (Plugin | PluginOption[])[] {
   return [

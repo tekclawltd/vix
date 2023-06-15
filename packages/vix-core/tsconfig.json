@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "types": ["node", "vite/client", "vitest/globals"],
+    "types": ["node"],
     "typeRoots": ["node_modules/@types"],
     "baseUrl": "./",
     "paths": {
