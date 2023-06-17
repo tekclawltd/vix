@@ -49,6 +49,4 @@ jspm_packages/
 .env.local
 .env.test
 
-package-lock.json
-
 dist
