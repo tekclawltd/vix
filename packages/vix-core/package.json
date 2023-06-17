@@ -59,8 +59,7 @@
     "@types/jest": "^29.4.0",
     "@types/node": "latest",
     "@types/source-map-support": "^0.5.6",
-    "@vitest/coverage-c8": "0.32.0",
-    "c8": "^8.0.0",
+    "@vitest/coverage-v8": "0.32.0",
     "typescript": "latest",
     "unplugin-auto-import": "0.16.4",
     "vitest": "0.32.0"

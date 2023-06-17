@@ -30,6 +30,9 @@ build
 node_modules/
 jspm_packages/
 
+# test report files
+testOutput/
+testOutput
 # TypeScript cache
 *.tsbuildinfo
 
