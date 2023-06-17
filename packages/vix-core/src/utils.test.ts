@@ -67,6 +67,8 @@ vi.mock('shelljs', () => {
   };
 });
 
+const mockBinPath = 'mock/bin';
+
 describe('cleanOptions()', () => {
   test('should clear the options', () => {
     const options: GlobalCLIOptions = {
@@ -147,7 +149,7 @@ describe('makeLogger()', () => {
 describe('installSymlink()', () => {
   beforeAll(() => {
     vi.spyOn(Number, 'parseFloat');
-    installSymlink(CLI_ALIAS);
+    installSymlink(CLI_ALIAS, mockBinPath);
   });
 
   afterEach(() => {
@@ -172,7 +174,7 @@ describe('installSymlink()', () => {
     );
     expect(shell.exec).toHaveBeenNthCalledWith(
       3,
-      `ln -s "$(pwd)/dist/bin/cli.js" /usr/local/bin/${CLI_ALIAS}`,
+      `ln -s "${mockBinPath}" /usr/local/bin/${CLI_ALIAS}`,
       {
         silent: true,
       }
@@ -201,7 +203,7 @@ describe('installSymlink()', () => {
       vi.spyOn(console, 'error').mockImplementation(() => ({} as any));
       vi.spyOn(process, 'exit').mockImplementation(() => ({} as any));
       withError = true;
-      installSymlink(CLI_ALIAS);
+      installSymlink(CLI_ALIAS, mockBinPath);
     });
     afterEach(() => {
       vi.clearAllMocks();
@@ -217,7 +219,9 @@ describe('installSymlink()', () => {
       mockNpmVersion = '3.0';
       const expectedError = `[ERROR: ${CLI_ALIAS}] You need npm version @>=5`;
 
-      expect(() => installSymlink(CLI_ALIAS)).toThrowError(expectedError);
+      expect(() => installSymlink(CLI_ALIAS, mockBinPath)).toThrowError(
+        expectedError
+      );
       expect(shell.exec).toHaveBeenNthCalledWith(1, 'npm -v');
     });
 
@@ -226,7 +230,9 @@ describe('installSymlink()', () => {
       mockNodeVersion = 'v9.0';
       const expectedError = `[ERROR: ${CLI_ALIAS}] You need to use node version @>=10`;
 
-      expect(() => installSymlink(CLI_ALIAS)).toThrowError(expectedError);
+      expect(() => installSymlink(CLI_ALIAS, mockBinPath)).toThrowError(
+        expectedError
+      );
       expect(shell.exec).toHaveBeenNthCalledWith(2, 'node -v');
     });
   });

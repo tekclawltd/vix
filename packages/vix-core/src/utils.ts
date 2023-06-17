@@ -46,7 +46,7 @@ export const makeLogger = (options: LoggerOption): Logger =>
     customLogger: options.customLogger,
   });
 
-export function installSymlink(cliName: string) {
+export function installSymlink(cliName: string, binPath) {
   // Check npm version
   const npm = shell.exec('npm -v').stdout;
 
@@ -89,11 +89,10 @@ export function installSymlink(cliName: string) {
   shell.echo('🕓  The setup process can take few minutes.');
   shell.echo('');
 
-  shell.echo('🕓  Removing existing binary ...');
   shell.rm('-f', `/usr/local/bin/${cliName}`);
   watcher(
     `📦  Linking ${cliName}-cli...`,
-    `ln -s "$(pwd)/dist/bin/cli.js" /usr/local/bin/${cliName}`
+    `ln -s "${binPath}" /usr/local/bin/${cliName}`
   );
   shell.echo(`✅  ${cliName} has been succesfully installed.`);
   shell.echo(`✅  Try \`${cliName} --help\``);
