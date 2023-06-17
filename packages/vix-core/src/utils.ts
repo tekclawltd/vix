@@ -89,7 +89,7 @@ export function installSymlink(cliName: string) {
   shell.echo('🕓  The setup process can take few minutes.');
   shell.echo('');
 
-  // Remove existing binary.
+  shell.echo('🕓  Removing existing binary ...');
   shell.rm('-f', `/usr/local/bin/${cliName}`);
   watcher(
     `📦  Linking ${cliName}-cli...`,

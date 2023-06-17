@@ -4,8 +4,8 @@
   "private": true,
   "main": "index.js",
   "engines": {
-    "node": "^16.17.0",
-    "npm": "^8.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
@@ -15,9 +15,10 @@
   "scripts": {
     "build": "npm run clean:dist && tsc -b -f -v",
     "watch": "tsc -b -w",
+    "setup": "npm run build && node packages/vix-core/dist/install",
     "clean:dist": "rm -rf packages/**/dist",
-    "clean": "rm -rf node_modules && npm i",
-    "bootstrap": "lerna clean -y && lerna bootstrap",
+    "clean": "rm -rf node_modules && lerna clean -y",
+    "bootstrap": "npm run clean && lerna bootstrap",
     "lint": "npm run lint -ws",
     "postinstall": "npm run build && node packages/vix-core/dist/install"
   },

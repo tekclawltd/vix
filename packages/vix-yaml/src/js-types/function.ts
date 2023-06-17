@@ -1,5 +1,5 @@
 import { Type } from 'js-yaml';
-const parser = require('esprima');
+import parser from 'esprima';
 
 function resolveJavascriptFunction(data: any) {
   if (data === null) return false;
