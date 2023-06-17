@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/scaffold",
-  "version": "1.0.2",
+  "version": "1.0.13",
   "scripts": {
     "build": "echo \"no build script\"",
     "watch": "echo \"no watch script\"",

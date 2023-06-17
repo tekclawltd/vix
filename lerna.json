@@ -1,8 +1,10 @@
 {
-  "version": "1.0.12",
+  "version": "1.0.13",
   "npmClient": "npm",
   "useWorkspaces": true,
-  "npmClientArgs": ["--ignore-engines"],
+  "npmClientArgs": [
+    "--ignore-engines"
+  ],
   "command": {
     "version": {
       "forcePublish": true,
