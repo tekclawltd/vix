@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-utils",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "",
   "main": "dist",
   "typings": "./src/index.ts",
@@ -27,7 +27,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@tekclaw/scaffold": "1.0.17",
+    "@tekclaw/scaffold": "1.0.18",
     "chalk": "^4.1.2",
     "deepmerge": "^4.2.2",
     "vite": "latest"
