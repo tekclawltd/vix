@@ -38,6 +38,7 @@ export default (
     react = true,
     optimizePersist = true,
     commonjs = true,
+    mdx = true,
   } = presetsPlugins;
   return [
     loadPlugin([browserBuild].every(Boolean), './browserBuildPlugin', {
@@ -70,5 +71,12 @@ export default (
       'vite-plugin-inspect',
       { config: debug }
     ),
+    loadPlugin([mdx].every(Boolean), '@mdx-js/rollup', { config: mdx }),
+    loadPlugin([mdx].every(Boolean), '@rollup/plugin-babel', {
+      moduleName: ' babel',
+      config: {
+        extensions: ['.js', '.jsx', '.cjs', '.mjs', '.md', '.mdx'],
+      },
+    }),
   ].filter(Boolean);
 };

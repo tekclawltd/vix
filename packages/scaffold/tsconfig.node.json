@@ -21,6 +21,7 @@
     "strict": false,
     "target": "es2020",
     "rootDir": "src",
+    "types": ["node"],
     "typeRoots": ["node_modules/@types"]
   }
 }

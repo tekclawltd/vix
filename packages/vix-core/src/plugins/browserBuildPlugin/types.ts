@@ -14,6 +14,7 @@ import { RollupYamlOptions } from '@rollup/plugin-yaml';
 import { RollupGraphqlOptions } from '@rollup/plugin-graphql';
 import { ReactPresetPluginOptions } from '../presetReact';
 import { Options as CommonJSOptions } from 'vite-plugin-commonjs';
+import { Options as MdxOptions } from '@mdx-js/rollup';
 
 export const PLUGIN_NAME = `${CLI_ALIAS}:browser-build-plugin`;
 
@@ -53,8 +54,7 @@ export type HandleFunction =
   | SimpleHandleFunction
   | NextHandleFunction
   | ContextNextHandleFunction;
-export interface BrowserBuildOption
-  extends OmitedViteUserConfig {
+export interface BrowserBuildOption extends OmitedViteUserConfig {
   outDir: string;
 }
 export interface DevServerOption extends ServerOptions {
@@ -62,7 +62,7 @@ export interface DevServerOption extends ServerOptions {
   envs?: Record<string, string>;
   adapter?: HandleFunction;
   requireAuth?: ContextrequireAuthFunction;
-  routes?: { [routePath: string]: NextHandleFunction }
+  routes?: { [routePath: string]: NextHandleFunction };
 }
 
 export interface ServerBuildOption extends BuildOptions {
@@ -81,6 +81,7 @@ export interface PresetsPluginOptions {
   graphql?: RollupGraphqlOptions | boolean;
   react?: ReactPresetPluginOptions | boolean;
   commonjs?: CommonJSOptions | boolean;
+  mdx?: MdxOptions | boolean;
 }
 
 export interface PresetsOption {
