@@ -72,11 +72,11 @@ export default (
       { config: debug }
     ),
     loadPlugin([mdx].every(Boolean), '@mdx-js/rollup', { config: mdx }),
-    loadPlugin([mdx].every(Boolean), '@rollup/plugin-babel', {
-      moduleName: ' babel',
-      config: {
-        extensions: ['.js', '.jsx', '.cjs', '.mjs', '.md', '.mdx'],
-      },
-    }),
+    // loadPlugin([mdx].every(Boolean), '@rollup/plugin-babel', {
+    //   moduleName: ' babel',
+    //   config: {
+    //     extensions: ['.js', '.jsx', '.cjs', '.mjs', '.md', '.mdx'],
+    //   },
+    // }),
   ].filter(Boolean);
 };
