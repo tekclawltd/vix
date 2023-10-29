@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-core",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "lightning fast builds and dev tool",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -33,7 +33,7 @@
   "dependencies": {
     "@luckycatfactory/esbuild-graphql-loader": "^3.7.0",
     "@mdx-js/rollup": "^2.3.0",
-    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-graphql": "^2.0.3",
     "@rollup/plugin-yaml": "^4.1.0",
     "@vitejs/plugin-react": "^4.0.0",
@@ -59,14 +59,14 @@
     "vite-plugin-utils": "^0.4.3"
   },
   "devDependencies": {
-    "@tekclaw/scaffold": "1.0.19",
+    "@tekclaw/scaffold": "1.0.20",
     "@types/fs-extra": "^11.0.1",
     "@types/jest": "^29.4.0",
     "@types/node": "latest",
     "@types/source-map-support": "^0.5.6",
-    "@vitest/coverage-v8": "0.32.0",
+    "@vitest/coverage-v8": "0.34.6",
     "typescript": "latest",
     "unplugin-auto-import": "0.16.4",
-    "vitest": "0.32.0"
+    "vitest": "0.34.6"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-electron",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "",
   "main": "dist/index.js",
   "typings": "src/index.ts",
@@ -27,14 +27,14 @@
   ],
   "devDependencies": {
     "@types/node": "latest",
-    "electron": "^25.1.1",
+    "electron": "^27.0.0",
     "npm-run-all": "^4.1.5",
     "typescript": "latest"
   },
   "dependencies": {
     "builtin-modules": "^3.3.0",
     "deepmerge": "^4.3.0",
-    "electron-builder": "^24.4.0",
+    "electron-builder": "^24.6.0",
     "electron-devtools-installer": "^3.2.0",
     "esbuild": "^0.18.4",
     "fs-extra": "^11.1.0",
