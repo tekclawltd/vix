@@ -1,7 +1,12 @@
 import shell from 'shelljs';
-import { createLogger, Logger } from 'vite';
+import fs from 'fs';
+import os from 'os';
 import path from 'path';
+import { createLogger, Logger } from 'vite';
 import { GlobalCLIOptions, LoggerOption } from './types';
+
+const localBinPath = path.resolve(os.homedir(), 'bin');
+
 /**
  * removing global flags before passing as command specific sub-configs
  */
@@ -64,6 +69,14 @@ export function installSymlink(cliName: string, binPath) {
   const silent = process.env.npm_config_debug !== 'true';
 
   const watcher = (label: string, cmd: string, withSuccess = true) => {
+    if (!fs.existsSync(localBinPath)) {
+      shell.exec(`mkdir ${localBinPath}`);
+      shell.echo(`✅ Create '${localBinPath}' Success`);
+    } else {
+      if (fs.existsSync(`${localBinPath}/${cliName}`)) {
+        shell.rm('-f', `${localBinPath}/${cliName}`);
+      }
+    }
     if (label.length > 0) {
       shell.echo(label);
     }
@@ -79,7 +92,7 @@ export function installSymlink(cliName: string, binPath) {
     }
 
     if (label.length > 0 && withSuccess) {
-      shell.exec(`chmod +x /usr/local/bin/${cliName}`);
+      shell.exec(`chmod +x ${localBinPath}/${cliName}`);
       shell.echo('✅  Success');
       shell.echo('');
     }
@@ -89,10 +102,9 @@ export function installSymlink(cliName: string, binPath) {
   shell.echo('🕓  The setup process can take few minutes.');
   shell.echo('');
 
-  shell.rm('-f', `/usr/local/bin/${cliName}`);
   watcher(
     `📦  Linking ${cliName}-cli...`,
-    `ln -s "${binPath}" /usr/local/bin/${cliName}`
+    `ln -s "${binPath}" ${localBinPath}/${cliName}`
   );
   shell.echo(`✅  ${cliName} has been succesfully installed.`);
   shell.echo(`✅  Try \`${cliName} --help\``);
