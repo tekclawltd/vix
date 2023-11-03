@@ -1,5 +1,5 @@
 import colors from 'picocolors';
-import path from 'path';
+import { isValidAsset } from '../../utils';
 import { HandleFunctionContext } from '../browserBuildPlugin/types';
 
 export default (
@@ -17,7 +17,7 @@ export default (
       req.url.includes('/__'),
       req.url === '/',
       req.url.includes('/?'),
-      path.parse(req.url).ext,
+      isValidAsset(req.url),
     ].some(Boolean)
   ) {
     if (

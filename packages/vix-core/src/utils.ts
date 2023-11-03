@@ -7,6 +7,18 @@ import { GlobalCLIOptions, LoggerOption } from './types';
 
 const localBinPath = path.resolve(os.homedir(), 'bin');
 
+const invalidFileNameChars = ['#', '%', '&', '{', '}', '\\', '<', '>', '*', '?', '/', ' ', '$', '!', '\'', '"', ':', '@', '+', '`', '|', '='];
+/**
+ * check if the url include valid filename
+ */
+export function isValidAsset(url: string) {
+  const { ext } = path.parse(url);
+  if (!ext) return false;
+  const [split] = url.split(ext);
+  const last = split.split('/').pop();
+  return invalidFileNameChars.every((elm) => !last.includes(elm));
+}
+
 /**
  * removing global flags before passing as command specific sub-configs
  */
