@@ -17,8 +17,8 @@
     "watch": "tsc -b -w",
     "setup": "node packages/vix-core/dist/install",
     "clean:dist": "rm -rf packages/**/dist",
-    "clean": "rm -rf node_modules && lerna clean -y",
-    "bootstrap": "npm run clean && lerna bootstrap",
+    "clean": "rm -rf node_modules && npx lerna clean -y",
+    "bootstrap": "npm run clean && npx lerna bootstrap",
     "lint": "npm run lint -ws",
     "postinstall": "npm run build"
   },
