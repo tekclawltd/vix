@@ -1,6 +1,6 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.all": true
+    "source.fixAll.all": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.quickSuggestions": {

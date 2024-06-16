@@ -1,26 +1,26 @@
 import { Type } from 'js-yaml';
 
 function resolveJavascriptUndefined() {
-  return true;
+    return true;
 }
 
 function constructJavascriptUndefined() {
-  /*eslint-disable no-undefined*/
-  return undefined;
+    /*eslint-disable no-undefined*/
+    return undefined;
 }
 
 function representJavascriptUndefined() {
-  return '';
+    return '';
 }
 
 function isUndefined(object: any) {
-  return typeof object === 'undefined';
+    return typeof object === 'undefined';
 }
 
 export default new Type('tag:yaml.org,2002:js/undefined', {
-  kind: 'scalar',
-  resolve: resolveJavascriptUndefined,
-  construct: constructJavascriptUndefined,
-  predicate: isUndefined,
-  represent: representJavascriptUndefined,
+    kind: 'scalar',
+    resolve: resolveJavascriptUndefined,
+    construct: constructJavascriptUndefined,
+    predicate: isUndefined,
+    represent: representJavascriptUndefined,
 });
