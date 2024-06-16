@@ -77,7 +77,7 @@ export type OptimizePersistPluginOptions =
 
 export interface PresetsPluginOptions {
   optimizePersist?: OptimizePersistPluginOptions;
-  yaml?: RollupYamlOptions | boolean;
+  yaml?: (RollupYamlOptions & { safe: boolean }) | boolean;
   graphql?: RollupGraphqlOptions | boolean;
   react?: ReactPresetPluginOptions | boolean;
   commonjs?: CommonjsOptions | boolean;
