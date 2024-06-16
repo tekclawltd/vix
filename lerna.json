@@ -1,7 +1,6 @@
 {
   "version": "1.0.24",
   "npmClient": "npm",
-  "useWorkspaces": true,
   "npmClientArgs": [
     "--ignore-engines"
   ],
