@@ -7,7 +7,30 @@ import { GlobalCLIOptions, LoggerOption } from './types';
 
 const localBinPath = path.resolve(os.homedir(), 'bin');
 
-const invalidFileNameChars = ['#', '%', '&', '{', '}', '\\', '<', '>', '*', '?', '/', ' ', '$', '!', '\'', '"', ':', '@', '+', '`', '|', '='];
+const invalidFileNameChars = [
+  '#',
+  '%',
+  '&',
+  '{',
+  '}',
+  '\\',
+  '<',
+  '>',
+  '*',
+  '?',
+  '/',
+  ' ',
+  '$',
+  '!',
+  "'",
+  '"',
+  ':',
+  '@',
+  '+',
+  '`',
+  '|',
+  '=',
+];
 /**
  * check if the url include valid filename
  */
@@ -16,7 +39,7 @@ export function isValidAsset(url: string) {
   if (!ext) return false;
   const [split] = url.split(ext);
   const last = split.split('/').pop();
-  return invalidFileNameChars.every((elm) => !last.includes(elm));
+  return invalidFileNameChars.every(elm => !last?.includes(elm));
 }
 
 /**

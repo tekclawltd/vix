@@ -13,7 +13,7 @@ import { Options as OptimizePersistOptions } from '../optimizePersistPlugin';
 import { RollupYamlOptions } from '@rollup/plugin-yaml';
 import { RollupGraphqlOptions } from '@rollup/plugin-graphql';
 import { ReactPresetPluginOptions } from '../presetReact';
-import { Options as CommonJSOptions } from 'vite-plugin-commonjs';
+import { CommonjsOptions } from 'vite-plugin-commonjs';
 import { Options as MdxOptions } from '@mdx-js/rollup';
 
 export const PLUGIN_NAME = `${CLI_ALIAS}:browser-build-plugin`;
@@ -80,7 +80,7 @@ export interface PresetsPluginOptions {
   yaml?: RollupYamlOptions | boolean;
   graphql?: RollupGraphqlOptions | boolean;
   react?: ReactPresetPluginOptions | boolean;
-  commonjs?: CommonJSOptions | boolean;
+  commonjs?: CommonjsOptions | boolean;
   mdx?: MdxOptions | boolean;
 }
 
