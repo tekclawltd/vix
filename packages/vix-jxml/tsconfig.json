@@ -1,0 +1,16 @@
+{
+  "extends": "../scaffold/tsconfig.node.json",
+  "compilerOptions": {
+    "declarationDir": "lib",
+    "jsx": "react-jsx",
+    "rootDir": "src",
+    "outDir": "esm",
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["*", "./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules/**", "lib"]
+}

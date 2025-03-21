@@ -1,0 +1,38 @@
+{
+  "name": "@tekclaw/vix-jxml",
+  "version": "1.0.28",
+  "main": "src/index.ts",
+  "typings": "src/index.ts",
+  "module": "src",
+  "files": [
+    "lib",
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@tekclaw/vix-yaml": "latest",
+    "immer": "^9.0.2",
+    "lodash": "^4.17.21",
+    "react-redux": "^7.2.4",
+    "tosource": "^2.0.0-alpha.3",
+    "use-immer": "^0.10.0"
+  },
+  "devDependencies": {
+    "@tekclaw/scaffold": "latest",
+    "@types/node": "^17.0.20",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "scripts": {
+    "build": "rm -rf lib esm dist && npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --build --force",
+    "build:esm": "tsc --module es2015 --outDir esm",
+    "watch": "tsc -w",
+    "lint": "echo \"no lint script\""
+  },
+  "license": "MIT"
+}

@@ -5,7 +5,8 @@
     { "path": "packages/vix-core" },
     { "path": "packages/vix-electron" },
     { "path": "packages/vix-utils" },
-    { "path": "packages/vix-yaml" }
+    { "path": "packages/vix-yaml" },
+    { "path": "packages/vix-jxml" }
   ],
   "exclude": ["packages/scaffold"]
 }
