@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-electron",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "",
   "main": "dist/index.js",
   "typings": "src/index.ts",
@@ -39,5 +39,6 @@
     "esbuild": "^0.18.4",
     "fs-extra": "^11.1.0",
     "vite": "latest"
-  }
+  },
+  "gitHead": "ec70e62fe875ebc21d423ac9bd01fa6efd9a769b"
 }

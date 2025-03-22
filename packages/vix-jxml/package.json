@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-jxml",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "main": "src/index.ts",
   "typings": "src/index.ts",
   "module": "src",
@@ -9,6 +9,9 @@
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@tekclaw/vix-yaml": "latest",
     "immer": "^9.0.2",
@@ -34,5 +37,6 @@
     "watch": "tsc -w",
     "lint": "echo \"no lint script\""
   },
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "ec70e62fe875ebc21d423ac9bd01fa6efd9a769b"
 }
