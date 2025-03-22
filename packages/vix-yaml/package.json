@@ -1,14 +1,14 @@
 {
   "name": "@tekclaw/vix-yaml",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "publishConfig": {
     "access": "public"
   },
-  "exports":{
-    "./yaml": "./dist/yaml.js" 
+  "exports": {
+    "./yaml": "./dist/yaml.js"
   },
   "dependencies": {
     "@rollup/pluginutils": "^5.1.4",
