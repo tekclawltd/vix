@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-yaml",
-  "version": "1.0.29",
+  "version": "1.0.30",
   "description": "",
   "main": "dist/index.js",
   "types": "src/index.ts",
