@@ -7,6 +7,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "exports":{
+    "./yaml": "./dist/yaml.js" 
+  },
   "dependencies": {
     "@rollup/pluginutils": "^5.1.4",
     "esprima": "^4.0.1",

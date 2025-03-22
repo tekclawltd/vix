@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import * as JXComponent from './components';
 import { computeJSTemplate, contextBuild, getHooks } from './libs/utils';
-import { jsYaml } from '@tekclaw/vix-yaml';
+import { jsYaml } from '@tekclaw/vix-yaml/dist/yaml';
 import { get as _get, merge as _merge } from 'lodash';
 import { useImmer } from 'use-immer';
 
