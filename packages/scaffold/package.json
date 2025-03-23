@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/scaffold",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "scripts": {
     "build": "echo \"no build script\"",
     "watch": "echo \"no watch script\"",
@@ -31,5 +31,5 @@
     "stylelint": "^13.13.1",
     "stylelint-config-idiomatic-order": "^8.1.0"
   },
-  "gitHead": "ec70e62fe875ebc21d423ac9bd01fa6efd9a769b"
+  "gitHead": "d4efc537019249f4a1321c9467b5c0c8b9159943"
 }

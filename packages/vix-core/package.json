@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-core",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "lightning fast builds and dev tool",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -59,7 +59,7 @@
     "vite-plugin-utils": "^0.4.3"
   },
   "devDependencies": {
-    "@tekclaw/scaffold": "1.0.28",
+    "@tekclaw/scaffold": "1.0.29",
     "@types/fs-extra": "^11.0.1",
     "@types/jest": "^29.4.0",
     "@types/node": "latest",
@@ -69,5 +69,5 @@
     "unplugin-auto-import": "0.16.4",
     "vitest": "0.34.6"
   },
-  "gitHead": "ec70e62fe875ebc21d423ac9bd01fa6efd9a769b"
+  "gitHead": "d4efc537019249f4a1321c9467b5c0c8b9159943"
 }

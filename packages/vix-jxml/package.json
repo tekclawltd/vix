@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-jxml",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "main": "src/index.ts",
   "typings": "src/index.ts",
   "module": "src",
@@ -38,5 +38,5 @@
     "lint": "echo \"no lint script\""
   },
   "license": "MIT",
-  "gitHead": "ec70e62fe875ebc21d423ac9bd01fa6efd9a769b"
+  "gitHead": "d4efc537019249f4a1321c9467b5c0c8b9159943"
 }

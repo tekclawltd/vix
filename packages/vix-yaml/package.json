@@ -1,6 +1,6 @@
 {
   "name": "@tekclaw/vix-yaml",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "",
   "main": "dist/index.js",
   "types": "src/index.ts",
@@ -30,5 +30,5 @@
   },
   "author": "",
   "license": "ISC",
-  "gitHead": "ec70e62fe875ebc21d423ac9bd01fa6efd9a769b"
+  "gitHead": "d4efc537019249f4a1321c9467b5c0c8b9159943"
 }
